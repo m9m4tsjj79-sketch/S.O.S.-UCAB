@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía del Inventario de Donaciones — Voluntariado UCAB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --azul:#37B4E3;
+    --verde:#027935;
+    --amarillo:#FFD033;
+    --azul-d:#0E5A78;
+    --verde-d:#014D22;
+    --amarillo-d:#7A5A00;
+    --tinta:#13201C;
+    --tinta-suave:#3F4E48;
+    --crema:#FAF8F2;
+    --crema-2:#F1EEE2;
+    --linea: rgba(19,32,28,0.12);
+    --linea-fuerte: rgba(19,32,28,0.22);
+    --radio: 14px;
+    --serif: 'Fraunces', serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--crema);
+    color:var(--tinta);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  img, svg{display:block;max-width:100%;}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px;}
+  @media (max-width:680px){.wrap{padding:0 20px;}}
+
+  /* ---------- Barra superior ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(250,248,242,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--linea);
+  }
+  .topbar-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 0;
+  }
+  .brandmark{display:flex;align-items:center;gap:10px;}
+  .brandmark img{height:30px;width:auto;}
+  .brandmark span{
+    font-family:var(--mono);
+    font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--tinta-suave);
+    border-left:1px solid var(--linea-fuerte);
+    padding-left:10px;
+  }
+  .topnav{display:flex;gap:26px;}
+  .topnav a{
+    font-size:14px;color:var(--tinta-suave);text-decoration:none;font-weight:500;
+  }
+  .topnav a:hover{color:var(--tinta);}
+  @media (max-width:680px){.topnav{display:none;}}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:88px 0 64px;
+    position:relative;
+    overflow:hidden;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;
+    color:var(--verde-d);
+    background:rgba(2,121,53,0.08);
+    border:1px solid rgba(2,121,53,0.18);
+    border-radius:100px;
+    padding:6px 14px;
+    margin-bottom:28px;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--verde);}
+
+  h1.titulo{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(34px,5.2vw,58px);
+    line-height:1.04;
+    letter-spacing:-0.01em;
+    margin:0 0 22px;
+    max-width:780px;
+  }
+  h1.titulo em{
+    font-style:normal;
+    color:var(--azul-d);
+    position:relative;
+  }
+
+  .lead{
+    font-size:18px;line-height:1.6;
+    color:var(--tinta-suave);
+    max-width:600px;
+    margin:0 0 40px;
+  }
+
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:56px;
+    align-items:center;
+  }
+  @media (max-width:860px){.hero-grid{grid-template-columns:1fr;gap:40px;}}
+
+  /* Diamantes UCAB animados */
+  .diamond-stage{
+    position:relative;
+    height:340px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .diamond-row{display:flex;align-items:center;}
+  .diamond{
+    width:108px;height:240px;
+    margin:0 -22px;
+    opacity:0;
+    transform:translateY(26px);
+    animation:rise 0.7s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  .diamond svg{width:100%;height:100%;}
+  .diamond:nth-child(1){animation-delay:0.05s;}
+  .diamond:nth-child(2){animation-delay:0.22s;}
+  .diamond:nth-child(3){animation-delay:0.39s;}
+  @keyframes rise{to{opacity:1;transform:translateY(0);}}
+
+  .diamond-caption{
+    position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+    font-family:var(--mono);font-size:11.5px;color:var(--tinta-suave);
+    text-align:center;letter-spacing:0.02em;
+    opacity:0;animation:fadein 0.6s ease forwards;animation-delay:1s;
+  }
+  @keyframes fadein{to{opacity:1;}}
+
+  @media (prefers-reduced-motion: reduce){
+    .diamond{animation:none;opacity:1;transform:none;}
+    .diamond-caption{animation:none;opacity:1;}
+  }
+
+  /* ---------- Secciones genéricas ---------- */
+  section{padding:64px 0;}
+  .section-head{max-width:620px;margin-bottom:42px;}
+  .kicker{
+    font-family:var(--mono);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--azul-d);margin:0 0 12px;font-weight:500;
+  }
+  h2{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(26px,3vw,36px);
+    line-height:1.12;margin:0 0 14px;
+  }
+  .section-head p{font-size:16.5px;line-height:1.65;color:var(--tinta-suave);margin:0;}
+
+  hr.divider{border:none;border-top:1px solid var(--linea);margin:0;}
+
+  /* ---------- Qué es esto: tarjetas ---------- */
+  .que-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+  }
+  @media (max-width:780px){.que-grid{grid-template-columns:1fr;}}
+  .que-card{
+    background:#fff;
+    border:1px solid var(--linea);
+    border-radius:var(--radio);
+    padding:26px 24px;
+  }
+  .que-num{
+    font-family:var(--serif);font-size:30px;font-weight:600;
+    color:var(--azul-d);margin:0 0 14px;
+  }
+  .que-card h3{
+    font-family:var(--sans);font-size:16px;font-weight:600;margin:0 0 8px;
+  }
+  .que-card p{font-size:14.5px;line-height:1.6;color:var(--tinta-suave);margin:0;}
+
+  /* ---------- Hoja Resumen mock ---------- */
+  .panel{
+    display:grid;grid-template-columns:0.92fr 1.08fr;gap:40px;align-items:center;
+  }
+  @media (max-width:860px){.panel{grid-template-columns:1fr;}}
+  .panel.reverse .panel-visual{order:-1;}
+  @media (max-width:860px){.panel.reverse .panel-visual{order:0;}}
+
+  .panel-text h2{margin-bottom:16px;}
+  .panel-text p{font-size:16px;line-height:1.68;color:var(--tinta-suave);margin:0 0 16px;}
+
+  .taglist{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
+  .tag{
+    font-family:var(--mono);font-size:12px;
+    border:1px solid var(--linea-fuerte);
+    border-radius:7px;padding:5px 10px;
+    color:var(--tinta-suave);
+  }
+
+  /* mock de resumen */
+  .resumen-card{
+    background:#fff;border:1px solid var(--linea);border-radius:var(--radio);
+    overflow:hidden;
+    box-shadow:0 1px 0 rgba(19,32,28,0.02);
+  }
+  .resumen-head{
+    background:var(--verde);color:#fff;padding:16px 20px;
+    font-family:var(--serif);font-weight:600;font-size:16px;
+  }
+  .resumen-head small{
+    display:block;font-family:var(--sans);font-weight:400;font-size:12px;
+    color:rgba(255,255,255,0.78);margin-top:3px;letter-spacing:0.01em;
+  }
+  table.resumen-tbl{width:100%;border-collapse:collapse;font-size:13.5px;}
+  table.resumen-tbl th{
+    text-align:left;font-weight:600;font-size:11.5px;letter-spacing:0.03em;text-transform:uppercase;
+    color:var(--tinta-suave);
+    padding:12px 20px 10px;border-bottom:1px solid var(--linea);
+  }
+  table.resumen-tbl td{
+    padding:11px 20px;border-bottom:1px solid var(--linea);
+  }
+  table.resumen-tbl td.num{text-align:right;font-family:var(--mono);}
+  table.resumen-tbl tr.total td{
+    font-weight:700;background:var(--crema-2);border-bottom:none;
+  }
+  .swatch{
+    display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:8px;
+  }
+
+  /* ---------- Hojas de voluntario: mock de planilla ---------- */
+  .sheet-mock{
+    background:#fff;border:1px solid var(--linea);border-radius:var(--radio);overflow:hidden;
+  }
+  .sheet-tabs{
+    display:flex;gap:2px;background:var(--crema-2);padding:8px 10px 0;border-bottom:1px solid var(--linea);
+    overflow-x:auto;
+  }
+  .sheet-tab{
+    font-family:var(--mono);font-size:11px;white-space:nowrap;
+    padding:8px 12px;border-radius:8px 8px 0 0;color:var(--tinta-suave);
+    background:transparent;
+  }
+  .sheet-tab.activa{background:#fff;color:var(--tinta);font-weight:600;border:1px solid var(--linea);border-bottom:1px solid #fff;margin-bottom:-1px;}
+  table.sheet-tbl{width:100%;border-collapse:collapse;font-size:12.5px;}
+  table.sheet-tbl th{
+    text-align:left;background:var(--verde);color:#fff;font-weight:600;font-size:11px;
+    padding:9px 14px;letter-spacing:0.01em;
+  }
+  table.sheet-tbl td{padding:9px 14px;border-bottom:1px solid var(--linea);color:var(--tinta-suave);}
+  table.sheet-tbl tr:nth-child(even){background:#FAFBFC;}
+  .pill-cat{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:11.5px;font-weight:500;
+  }
+
+  /* ---------- Categorías: selector de diamantes ---------- */
+  .cat-section{background:var(--tinta);color:#fff;}
+  .cat-section .kicker{color:var(--amarillo);}
+  .cat-section h2{color:#fff;}
+  .cat-section .section-head p{color:rgba(255,255,255,0.66);}
+
+  .cat-board{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  }
+  @media (max-width:780px){.cat-board{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:480px){.cat-board{grid-template-columns:1fr;}}
+
+  .cat-tile{
+    position:relative;
+    border-radius:12px;
+    padding:22px 20px 20px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.12);
+    transition:transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  }
+  .cat-tile:hover{
+    transform:translateY(-3px);
+    background:rgba(255,255,255,0.09);
+  }
+  .cat-tile .cat-diamond{width:26px;height:58px;margin-bottom:16px;}
+  .cat-tile h4{font-size:15px;font-weight:600;margin:0 0 6px;line-height:1.3;}
+  .cat-tile p{font-size:13px;color:rgba(255,255,255,0.55);margin:0;line-height:1.5;}
+
+  /* ---------- Pasos Google Sheets ---------- */
+  .pasos{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:18px;
+    counter-reset:paso;
+  }
+  @media (max-width:860px){.pasos{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:480px){.pasos{grid-template-columns:1fr;}}
+  .paso{
+    border:1px solid var(--linea);border-radius:var(--radio);
+    padding:22px 20px;background:#fff;
+    position:relative;
+  }
+  .paso::before{
+    counter-increment:paso;content:counter(paso);
+    font-family:var(--serif);font-weight:600;font-size:14px;
+    width:30px;height:30px;border-radius:50%;
+    background:var(--azul);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:14px;
+  }
+  .paso h4{font-size:14.5px;font-weight:600;margin:0 0 8px;}
+  .paso p{font-size:13.5px;line-height:1.55;color:var(--tinta-suave);margin:0;}
+
+  /* ---------- Recomendaciones ---------- */
+  .reco-list{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  @media (max-width:680px){.reco-list{grid-template-columns:1fr;}}
+  .reco{
+    display:flex;gap:14px;
+    border-left:3px solid var(--azul);
+    padding:4px 0 4px 16px;
+  }
+  .reco.verde{border-left-color:var(--verde);}
+  .reco.amarillo{border-left-color:var(--amarillo-d);}
+  .reco h4{font-size:14.5px;font-weight:600;margin:0 0 4px;}
+  .reco p{font-size:13.5px;line-height:1.55;color:var(--tinta-suave);margin:0;}
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top:1px solid var(--linea);
+    padding:36px 0 44px;
+  }
+  .foot-row{
+    display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;
+  }
+  .foot-row p{font-size:13px;color:var(--tinta-suave);margin:0;}
+  .foot-brand{display:flex;align-items:center;gap:10px;}
+  .foot-brand img{height:22px;}
+
+  .accent-underline{
+    background-image:linear-gradient(transparent 65%, rgba(255,208,51,0.55) 65%);
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brandmark">
+      <img src="Logo_UCAB.png" alt="Universidad Católica Andrés Bello">
+      <span>Voluntariado · Acople solidario</span>
+    </div>
+    <nav class="topnav">
+      <a href="#resumen">Resumen</a>
+      <a href="#voluntarios">Hojas de voluntario</a>
+      <a href="#categorias">Categorías</a>
+      <a href="#sheets">Google Sheets</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> Guía del inventario de donaciones</div>
+      <h1 class="titulo">Cada donación, <em class="accent-underline">clasificada</em> y lista para llegar a quien la necesita.</h1>
+      <p class="lead">Esta guía explica cómo usar el Excel/Google Sheets de inventario que el Voluntariado UCAB pondrá en marcha durante el Acople para canalizar ayuda hacia las zonas afectadas por el terremoto.</p>
+    </div>
+    <div class="diamond-stage">
+      <div class="diamond-row">
+        <div class="diamond">
+          <svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#FFD033"/></svg>
+        </div>
+        <div class="diamond">
+          <svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#37B4E3"/></svg>
+        </div>
+        <div class="diamond">
+          <svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#027935"/></svg>
+        </div>
+      </div>
+      <div class="diamond-caption">tres colores, seis categorías,<br>un solo inventario compartido</div>
+    </div>
+  </div>
+</header>
+
+<hr class="divider">
+
+<section id="que-es">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Qué es este archivo</p>
+      <h2>Un solo libro, tres tareas distintas</h2>
+      <p>El archivo reúne en un mismo lugar el registro de lo que entra por donación, la organización por categoría y el conteo general — sin que los voluntarios se interrumpan entre sí.</p>
+    </div>
+    <div class="que-grid">
+      <div class="que-card">
+        <p class="que-num">01</p>
+        <h3>Registrar</h3>
+        <p>Cada voluntario anota en su propia hoja lo que va recibiendo: fecha, categoría, artículo, cantidad y unidad.</p>
+      </div>
+      <div class="que-card">
+        <p class="que-num">02</p>
+        <h3>Clasificar</h3>
+        <p>Una lista desplegable de categorías evita errores de escritura, para que nada quede mal contado o fuera de lugar.</p>
+      </div>
+      <div class="que-card">
+        <p class="que-num">03</p>
+        <h3>Totalizar</h3>
+        <p>La hoja Resumen suma sola, en tiempo real, lo que cada voluntario va cargando en las suyas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="resumen">
+  <div class="wrap">
+    <div class="panel">
+      <div class="panel-text">
+        <p class="kicker">Hoja · Resumen</p>
+        <h2>La fotografía completa del Acople</h2>
+        <p>Esta hoja no se edita a mano. Sus fórmulas recorren las seis hojas de voluntarios y suman, categoría por categoría, cuánto se ha recibido en total y cuántos registros lo respaldan.</p>
+        <p>Sirve para saber, en cualquier momento del Acople, qué categorías ya tienen suficiente y cuáles necesitan más difusión.</p>
+        <div class="taglist">
+          <span class="tag">=SUMIF(...)</span>
+          <span class="tag">se actualiza sola</span>
+          <span class="tag">no editar a mano</span>
+        </div>
+      </div>
+      <div class="panel-visual">
+        <div class="resumen-card">
+          <div class="resumen-head">
+            Resumen general de donaciones
+            <small>Se actualiza automáticamente</small>
+          </div>
+          <table class="resumen-tbl">
+            <thead>
+              <tr><th>Categoría</th><th style="text-align:right">Cantidad</th><th style="text-align:right">%</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="swatch" style="background:#FFD033"></span>Alimentos no perecederos</td><td class="num">186</td><td class="num">31.4%</td></tr>
+              <tr><td><span class="swatch" style="background:#37B4E3"></span>Higiene personal</td><td class="num">142</td><td class="num">24.0%</td></tr>
+              <tr><td><span class="swatch" style="background:#027935"></span>Medicinas e insumos</td><td class="num">98</td><td class="num">16.5%</td></tr>
+              <tr><td><span class="swatch" style="background:#FFD033"></span>Cuidado infantil</td><td class="num">87</td><td class="num">14.7%</td></tr>
+              <tr class="total"><td>Total general</td><td class="num">593</td><td class="num">100%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="voluntarios">
+  <div class="wrap">
+    <div class="panel reverse">
+      <div class="panel-text">
+        <p class="kicker">Hojas · Voluntario 1 a Voluntario 6</p>
+        <h2>Una hoja por persona, sin pisarse el trabajo</h2>
+        <p>Cada voluntario tiene asignada su propia hoja dentro del mismo archivo. Como todos trabajan sobre Google Sheets, varias personas pueden registrar donaciones al mismo tiempo, cada una en su hoja, sin afectar lo que escriben los demás.</p>
+        <p>Las columnas son las mismas en las seis hojas: Fecha, Categoría, Artículo, Cantidad, Unidad y Observaciones.</p>
+      </div>
+      <div class="panel-visual">
+        <div class="sheet-mock">
+          <div class="sheet-tabs">
+            <div class="sheet-tab activa">Voluntario 1</div>
+            <div class="sheet-tab">Voluntario 2</div>
+            <div class="sheet-tab">Voluntario 3</div>
+            <div class="sheet-tab">Voluntario 4</div>
+          </div>
+          <table class="sheet-tbl">
+            <thead>
+              <tr><th>Fecha</th><th>Categoría</th><th>Artículo</th><th>Cant.</th><th>Unidad</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>24/06</td>
+                <td><span class="pill-cat"><span class="swatch" style="background:#37B4E3"></span>Higiene personal</span></td>
+                <td>Jabón de baño</td><td>24</td><td>unid</td>
+              </tr>
+              <tr>
+                <td>24/06</td>
+                <td><span class="pill-cat"><span class="swatch" style="background:#FFD033"></span>Alim. no perecedero</span></td>
+                <td>Arroz</td><td>15</td><td>kg</td>
+              </tr>
+              <tr>
+                <td>24/06</td>
+                <td><span class="pill-cat"><span class="swatch" style="background:#027935"></span>Medicinas</td>
+                <td>Suero oral</td><td>30</td><td>unid</td>
+              </tr>
+              <tr>
+                <td>25/06</td>
+                <td><span class="pill-cat"><span class="swatch" style="background:#FFD033"></span>Cuidado infantil</span></td>
+                <td>Pañales talla M</td><td>6</td><td>paquete</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="categorias" class="cat-section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Las seis categorías</p>
+      <h2>Todo lo que entra, tiene un lugar</h2>
+      <p>Estas son las opciones disponibles en la lista desplegable de cada hoja. Elegir siempre una de la lista es lo que permite que el Resumen cuente bien.</p>
+    </div>
+    <div class="cat-board">
+      <div class="cat-tile">
+        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#FFD033"/></svg></div>
+        <h4>Alimentos no perecederos</h4>
+        <p>Arroz, granos, pasta, enlatados, harina.</p>
+      </div>
+      <div class="cat-tile">
+        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#37B4E3"/></svg></div>
+        <h4>Alimentos perecederos</h4>
+        <p>Frutas, verduras, lácteos, pan, proteínas frescas.</p>
+      </div>
+      <div class="cat-tile">
+        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#027935"/></svg></div>
+        <h4>Cuidado infantil</h4>
+        <p>Pañales, fórmula, toallitas, ropa de bebé.</p>
+      </div>
+      <div class="cat-tile">
+        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#FFD033"/></svg></div>
+        <h4>Higiene personal</h4>
+        <p>Jabón, papel higiénico, toallas sanitarias, cepillos.</p>
+      </div>
+      <div class="cat-tile">
+        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#37B4E3"/></svg></div>
+        <h4>Medicinas e insumos médicos</h4>
+        <p>Analgésicos, sueros, gasas, antisépticos.</p>
+      </div>
+      <div class="cat-tile">
+        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#027935"/></svg></div>
+        <h4>Herramientas de extracción</h4>
+        <p>Palas, picos, linternas, cuerdas, guantes resistentes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="sheets">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Trabajo en equipo</p>
+      <h2>Cómo se usa en Google Sheets</h2>
+      <p>El archivo se sube una sola vez. A partir de ahí, todos trabajan sobre el mismo enlace, en simultáneo, desde cualquier celular o computadora.</p>
+    </div>
+    <div class="pasos">
+      <div class="paso">
+        <h4>Subir el archivo</h4>
+        <p>En Google Drive: Nuevo → Subir archivo, y seleccionar el Excel del inventario.</p>
+      </div>
+      <div class="paso">
+        <h4>Abrir con Sheets</h4>
+        <p>Clic derecho sobre el archivo → Abrir con → Google Sheets. Las fórmulas y listas se conservan.</p>
+      </div>
+      <div class="paso">
+        <h4>Compartir el enlace</h4>
+        <p>Compartir con permiso de edición para todo el grupo de voluntarios del Acople.</p>
+      </div>
+      <div class="paso">
+        <h4>Cada uno en su hoja</h4>
+        <p>Cada voluntario abre su pestaña asignada (Voluntario 1 a 6) y empieza a registrar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="recomendaciones">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Antes de empezar</p>
+      <h2>Cuatro cosas que evitan dolores de cabeza</h2>
+    </div>
+    <div class="reco-list">
+      <div class="reco">
+        <div>
+          <h4>No editar la hoja de otro voluntario</h4>
+          <p>Cada hoja es un espacio individual. Si hay que corregir algo de otra persona, mejor avisarle directamente.</p>
+        </div>
+      </div>
+      <div class="reco verde">
+        <div>
+          <h4>No tocar la hoja Resumen</h4>
+          <p>Se calcula sola. Escribir algo encima de una fórmula puede romper el total general.</p>
+        </div>
+      </div>
+      <div class="reco amarillo">
+        <div>
+          <h4>Usar siempre la lista desplegable</h4>
+          <p>Escribir la categoría a mano (en vez de elegirla) hace que esa fila no se cuente en el Resumen.</p>
+        </div>
+      </div>
+      <div class="reco">
+        <div>
+          <h4>Cuando algo no calce del todo</h4>
+          <p>Elegir la categoría más cercana y anotar el detalle en Observaciones, para no perder información.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <div class="foot-brand">
+      <img src="Logo_UCAB.png" alt="UCAB">
+      <p>Voluntariado UCAB · Acople de donaciones para zonas afectadas por el terremoto</p>
+    </div>
+    <p>Guía de uso del inventario · Excel / Google Sheets</p>
+  </div>
+</footer>
+
+</body>
+</html>
