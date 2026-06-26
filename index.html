@@ -28,19 +28,20 @@
   }
 
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
   body{
     margin:0;
     background:var(--crema);
     color:var(--tinta);
     font-family:var(--sans);
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
   }
 
   img, svg{display:block;max-width:100%;}
 
   .wrap{max-width:1080px;margin:0 auto;padding:0 32px;}
-  @media (max-width:680px){.wrap{padding:0 20px;}}
+  @media (max-width:680px){.wrap{padding:0 18px;}}
 
   /* ---------- Barra superior ---------- */
   .topbar{
@@ -52,22 +53,35 @@
   .topbar-inner{
     display:flex;align-items:center;justify-content:space-between;
     padding:14px 0;
+    gap:12px;
   }
-  .brandmark{display:flex;align-items:center;gap:10px;}
-  .brandmark img{height:30px;width:auto;}
+  .brandmark{display:flex;align-items:center;gap:10px;min-width:0;}
+  .brandmark img{height:28px;width:auto;flex-shrink:0;}
   .brandmark span{
     font-family:var(--mono);
-    font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+    font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;
     color:var(--tinta-suave);
     border-left:1px solid var(--linea-fuerte);
     padding-left:10px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
   }
-  .topnav{display:flex;gap:26px;}
+  @media (max-width:480px){.brandmark span{display:none;}}
+
+  .topnav{display:flex;gap:22px;flex-shrink:0;}
   .topnav a{
     font-size:14px;color:var(--tinta-suave);text-decoration:none;font-weight:500;
   }
   .topnav a:hover{color:var(--tinta);}
-  @media (max-width:680px){.topnav{display:none;}}
+  @media (max-width:680px){
+    .topnav{gap:0;}
+    .topnav a{display:none;}
+    .topnav a.nav-mobile{
+      display:flex;align-items:center;gap:5px;
+      color:var(--verde-d);font-weight:600;font-size:13px;
+    }
+  }
 
   /* ---------- Hero ---------- */
   .hero{
@@ -75,6 +89,7 @@
     position:relative;
     overflow:hidden;
   }
+  @media (max-width:680px){.hero{padding:40px 0 36px;}}
   .eyebrow{
     display:inline-flex;align-items:center;gap:8px;
     font-family:var(--mono);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;
@@ -117,12 +132,13 @@
   }
   @media (max-width:860px){.hero-grid{grid-template-columns:1fr;gap:40px;}}
 
-  /* Diamantes UCAB animados */
+  /* Colmenas UCAB animadas */
   .diamond-stage{
     position:relative;
     height:340px;
     display:flex;align-items:center;justify-content:center;
   }
+  @media (max-width:680px){.diamond-stage{height:220px;}}
   .diamond-row{display:flex;align-items:center;}
   .diamond{
     width:108px;height:240px;
@@ -130,6 +146,9 @@
     opacity:0;
     transform:translateY(26px);
     animation:rise 0.7s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  @media (max-width:680px){
+    .diamond{width:70px;height:156px;margin:0 -14px;}
   }
   .diamond svg{width:100%;height:100%;}
   .diamond:nth-child(1){animation-delay:0.05s;}
@@ -142,7 +161,9 @@
     font-family:var(--mono);font-size:11.5px;color:var(--tinta-suave);
     text-align:center;letter-spacing:0.02em;
     opacity:0;animation:fadein 0.6s ease forwards;animation-delay:1s;
+    width:100%;padding:0 8px;
   }
+  @media (max-width:680px){.diamond-caption{font-size:10.5px;}}
   @keyframes fadein{to{opacity:1;}}
 
   @media (prefers-reduced-motion: reduce){
@@ -152,7 +173,9 @@
 
   /* ---------- Secciones genéricas ---------- */
   section{padding:64px 0;}
+  @media (max-width:680px){section{padding:40px 0;}}
   .section-head{max-width:620px;margin-bottom:42px;}
+  @media (max-width:680px){.section-head{margin-bottom:28px;}}
   .kicker{
     font-family:var(--mono);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
     color:var(--azul-d);margin:0 0 12px;font-weight:500;
@@ -211,6 +234,7 @@
     overflow:hidden;
     box-shadow:0 1px 0 rgba(19,32,28,0.02);
   }
+  .resumen-table-scroll{overflow-x:auto;}
   .resumen-head{
     background:var(--verde);color:#fff;padding:16px 20px;
     font-family:var(--serif);font-weight:600;font-size:16px;
@@ -219,7 +243,7 @@
     display:block;font-family:var(--sans);font-weight:400;font-size:12px;
     color:rgba(255,255,255,0.78);margin-top:3px;letter-spacing:0.01em;
   }
-  table.resumen-tbl{width:100%;border-collapse:collapse;font-size:13.5px;}
+  table.resumen-tbl{width:100%;border-collapse:collapse;font-size:13.5px;min-width:420px;}
   table.resumen-tbl th{
     text-align:left;font-weight:600;font-size:11.5px;letter-spacing:0.03em;text-transform:uppercase;
     color:var(--tinta-suave);
@@ -250,7 +274,8 @@
     background:transparent;
   }
   .sheet-tab.activa{background:#fff;color:var(--tinta);font-weight:600;border:1px solid var(--linea);border-bottom:1px solid #fff;margin-bottom:-1px;}
-  table.sheet-tbl{width:100%;border-collapse:collapse;font-size:12.5px;}
+  table.sheet-tbl{width:100%;border-collapse:collapse;font-size:12.5px;min-width:480px;}
+  .sheet-table-scroll{overflow-x:auto;}
   table.sheet-tbl th{
     text-align:left;background:var(--verde);color:#fff;font-weight:600;font-size:11px;
     padding:9px 14px;letter-spacing:0.01em;
@@ -334,6 +359,9 @@
   .foot-row{
     display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;
   }
+  @media (max-width:560px){
+    .foot-row{flex-direction:column;align-items:flex-start;text-align:left;}
+  }
   .foot-row p{font-size:13px;color:var(--tinta-suave);margin:0;}
   .foot-brand{display:flex;align-items:center;gap:10px;}
   .foot-brand img{height:22px;}
@@ -356,6 +384,7 @@
       <a href="#voluntarios">Hojas de voluntario</a>
       <a href="#categorias">Categorías</a>
       <a href="#sheets">Google Sheets</a>
+      <a href="#categorias" class="nav-mobile">Ver guía <i>↓</i></a>
     </nav>
   </div>
 </div>
@@ -370,13 +399,13 @@
     <div class="diamond-stage">
       <div class="diamond-row">
         <div class="diamond">
-          <svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#FFD033"/></svg>
+          <svg viewBox="0 0 100 220"><polygon points="50,0 80.9,69.2 80.9,148.3 50,220 19.1,148.3 19.1,69.2" fill="#FFD033"/></svg>
         </div>
         <div class="diamond">
-          <svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#37B4E3"/></svg>
+          <svg viewBox="0 0 100 220"><polygon points="50,0 80.9,69.2 80.9,148.3 50,220 19.1,148.3 19.1,69.2" fill="#37B4E3"/></svg>
         </div>
         <div class="diamond">
-          <svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#027935"/></svg>
+          <svg viewBox="0 0 100 220"><polygon points="50,0 80.9,69.2 80.9,148.3 50,220 19.1,148.3 19.1,69.2" fill="#027935"/></svg>
         </div>
       </div>
       <div class="diamond-caption">tres colores, seis categorías,<br>un solo inventario compartido</div>
@@ -435,6 +464,7 @@
             Resumen general de donaciones
             <small>Se actualiza automáticamente</small>
           </div>
+          <div class="resumen-table-scroll">
           <table class="resumen-tbl">
             <thead>
               <tr><th>Categoría</th><th style="text-align:right">Cantidad</th><th style="text-align:right">%</th></tr>
@@ -447,6 +477,7 @@
               <tr class="total"><td>Total general</td><td class="num">593</td><td class="num">100%</td></tr>
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </div>
@@ -472,6 +503,7 @@
             <div class="sheet-tab">Voluntario 3</div>
             <div class="sheet-tab">Voluntario 4</div>
           </div>
+          <div class="sheet-table-scroll">
           <table class="sheet-tbl">
             <thead>
               <tr><th>Fecha</th><th>Categoría</th><th>Artículo</th><th>Cant.</th><th>Unidad</th></tr>
@@ -499,6 +531,7 @@
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </div>
@@ -514,32 +547,32 @@
     </div>
     <div class="cat-board">
       <div class="cat-tile">
-        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#FFD033"/></svg></div>
+        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 80.9,69.2 80.9,148.3 50,220 19.1,148.3 19.1,69.2" fill="#FFD033"/></svg></div>
         <h4>Alimentos no perecederos</h4>
         <p>Arroz, granos, pasta, enlatados, harina.</p>
       </div>
       <div class="cat-tile">
-        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#37B4E3"/></svg></div>
+        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 80.9,69.2 80.9,148.3 50,220 19.1,148.3 19.1,69.2" fill="#37B4E3"/></svg></div>
         <h4>Alimentos perecederos</h4>
         <p>Frutas, verduras, lácteos, pan, proteínas frescas.</p>
       </div>
       <div class="cat-tile">
-        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#027935"/></svg></div>
+        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 80.9,69.2 80.9,148.3 50,220 19.1,148.3 19.1,69.2" fill="#027935"/></svg></div>
         <h4>Cuidado infantil</h4>
         <p>Pañales, fórmula, toallitas, ropa de bebé.</p>
       </div>
       <div class="cat-tile">
-        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#FFD033"/></svg></div>
+        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 80.9,69.2 80.9,148.3 50,220 19.1,148.3 19.1,69.2" fill="#FFD033"/></svg></div>
         <h4>Higiene personal</h4>
         <p>Jabón, papel higiénico, toallas sanitarias, cepillos.</p>
       </div>
       <div class="cat-tile">
-        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#37B4E3"/></svg></div>
+        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 80.9,69.2 80.9,148.3 50,220 19.1,148.3 19.1,69.2" fill="#37B4E3"/></svg></div>
         <h4>Medicinas e insumos médicos</h4>
         <p>Analgésicos, sueros, gasas, antisépticos.</p>
       </div>
       <div class="cat-tile">
-        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 100,55 50,220 0,55" fill="#027935"/></svg></div>
+        <div class="cat-diamond"><svg viewBox="0 0 100 220"><polygon points="50,0 80.9,69.2 80.9,148.3 50,220 19.1,148.3 19.1,69.2" fill="#027935"/></svg></div>
         <h4>Herramientas de extracción</h4>
         <p>Palas, picos, linternas, cuerdas, guantes resistentes.</p>
       </div>
